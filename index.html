@@ -1,0 +1,83 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <title>Яндекс карты</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="https://yastatic.net/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+        ymaps.ready(init);
+        var myMap,
+            myPlacemark;
+
+
+        function init(){
+            myMap = new ymaps.Map("map", {
+                center: [53.304442, 34.303849],
+                zoom: 17
+            });
+
+            myMap.geoObjects.remove(myPlacemark);
+            let lazatIcon = new ymaps.Placemark([53.305155, 34.302001], {
+                balloonContentHeader: "Лазат",
+                balloonContentBody: "Круглосуточно",
+            }, {
+                preset: 'islands#yellowGlyphCircleIcon',
+                iconGlyph: 'cutlery',
+                hintContent: 'Лазат'
+            });
+            let bbIcon = new ymaps.Placemark([53.304388, 34.302614], {
+                balloonContentHeader: "Бизнес бар",
+                balloonContentBody: "11:00 – 00:00",
+            }, {
+                preset: 'islands#yellowGlyphCircleIcon',
+                iconGlyph: 'glass',
+                hintContent: 'Бизнес бар'
+            });
+
+            let chachaIcon = new ymaps.Placemark([53.303777, 34.300099], {
+                balloonContentHeader: "Чача",
+                balloonContentBody: "11:00 – 22:00",
+            }, {
+                preset: 'islands#yellowGlyphCircleIcon',
+                iconGlyph: 'glass',
+                hintContent: 'Чача'
+            });
+
+            let stolovayaIcon = new ymaps.Placemark([53.305039, 34.303130], {
+                balloonContentHeader: "Столовая",
+                balloonContentBody: "10:30 – 15:30",
+            }, {
+                preset: 'islands#yellowGlyphCircleIcon',
+                iconGlyph: 'cutlery',
+                hintContent: 'Столовая'
+            });
+
+            let macIcon = new ymaps.Placemark([53.308265, 34.303031], {
+                balloonContentHeader: "Макдоналдс",
+                balloonContentBody: "07:00 – 00:00",
+            }, {
+                preset: 'islands#yellowGlyphCircleIcon',
+                iconGlyph: 'cutlery',
+                hintContent: 'Макдоналдс'
+            });
+
+            let chiliIcon = new ymaps.Placemark([53.302001, 34.305919], {
+                balloonContentHeader: "Чили",
+                balloonContentBody: "10:00 – 23:00",
+            }, {
+                preset: 'islands#yellowGlyphCircleIcon',
+                iconGlyph: 'glass',
+                hintContent: 'Чили'
+            });
+            myMap.geoObjects.add(stolovayaIcon).add(lazatIcon).add(bbIcon).add(chiliIcon).add(macIcon).add(chachaIcon);
+
+        }
+
+    </script>
+    </head>
+<body>
+<div id="map" style="width: 600px; height: 400px;">
+</div>
+
+</body>
+</html>
