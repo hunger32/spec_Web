@@ -1,0 +1,155 @@
+<!-- <div class="news-btn-div" data-tab="news-2" onclick="req1()">Кнопка</div> -->
+<style>
+    .containerchild{
+        float : left;
+        border: 3px solid #000;
+        margin: 5px;
+        width: 40%;
+        height: 90px;
+    }
+</style>
+<div class="tab">
+    <button class="tablinks" onclick="openAll()">All</button>
+    <button class="tablinks" onclick="openCompleted()">Completed</button>
+    <button class="tablinks" onclick="openUncompleted()">Uncompleted</button>
+</div>
+<div id="All" class="tabcontent">
+</div>
+
+<div id="Completed" class="tabcontent">
+</div>
+
+<div id="Uncompleted" class="tabcontent">
+</div>
+    <div id="container" class="container">
+        
+    </div>
+<script>
+    function openUncompleted() {
+    var i, tabcontent, tablinks;
+
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        if (i == 2) {tabcontent[i].style.display = "inline-block"; continue;}
+        tabcontent[i].style.display = "none";
+    }
+
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    ajax_get('http://jsonplaceholder.typicode.com/todos', function(data) {
+
+        for(let item in data)
+        {
+            console.log(data[item]);
+            let completed = data[item].completed;
+            let title = data[item].title;
+            if(!completed) {
+                let div = document.createElement('div');
+                div.className = "containerchild";
+                div.id = "containerchild";
+                let completedWrapper = document.createElement('p');
+                completedWrapper.textContent = completed;
+                completedWrapper.className = "completedP";
+                let p = document.createElement('p');
+                p.className = "titleP";
+                p.innerHTML = title;
+                div.appendChild(completedWrapper);
+                div.appendChild(p);
+                tabcontent[2].appendChild(div);
+            }else continue;
+        }
+    });
+}
+
+    function openCompleted() {
+    var i, tabcontent, tablinks;
+
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        if (i == 1) {tabcontent[i].style.display = "inline-block"; continue;}
+        tabcontent[i].style.display = "none";
+    }
+
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    ajax_get('http://jsonplaceholder.typicode.com/todos', function(data) {
+
+        for(let item in data)
+        {
+            console.log(data[item]);
+            //let idToDo = data[item].id;
+            let completed = data[item].completed;
+            let title = data[item].title;
+            if(completed) {
+                let div = document.createElement('div');
+                div.className = "containerchild";
+                div.id = "containerchild";
+                let completedWrapper = document.createElement('p');
+                completedWrapper.textContent = completed;
+                completedWrapper.className = "completedP";
+                let p = document.createElement('p');
+                p.className = "titleP";
+                p.innerHTML = title;
+                div.appendChild(completedWrapper);
+                div.appendChild(p);
+                tabcontent[1].appendChild(div);
+            }else continue;
+        }
+    });
+}
+
+    function openAll(){
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            if (i == 0) {tabcontent[i].style.display = "inline-block"; continue;}
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        ajax_get('http://jsonplaceholder.typicode.com/todos', function(data) {
+
+            for(let item in data)
+            {
+                console.log(data[item]);
+                let completed = data[item].completed;
+                let title = data[item].title;
+                let div = document.createElement('div');
+                div.className  = "containerchild";
+                div.id = "containerchild";
+                let completedWrapper = document.createElement('p');
+                completedWrapper.textContent = completed;
+                completedWrapper.className = "completedP";
+                let p = document.createElement('p');
+                p.className = "titleP";
+                p.innerHTML = title;
+                div.appendChild(completedWrapper);
+                div.appendChild(p);
+                tabcontent[0].appendChild(div);
+            }
+        });
+    }
+    function ajax_get(url, callback) {
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            try {
+                var data = JSON.parse(xmlhttp.responseText);
+            } catch(err) {
+                console.log(err.message + " in " + xmlhttp.responseText);
+                return;
+            }
+            callback(data);
+        }
+    };
+    xmlhttp.open("GET", url, false);
+    xmlhttp.send();
+}
+
+</script>
